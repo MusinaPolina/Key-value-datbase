@@ -1,5 +1,4 @@
 import java.io.File
-import java.io.PrintWriter
 import java.io.FileOutputStream
 
 const val DATABASE: String = "database"
