@@ -19,27 +19,30 @@ fun findValue(key: String, database: String = DATABASE): String? {
     return null
 }
 
-fun modifyElement(key: String, value: String, database: String = DATABASE) {
-    removeElement(key, database)
+fun modifyElement(key: String, value: String, database: String = DATABASE): Boolean {
+    val exists = removeElement(key, database)
     addElement(key, value, database)
+    return exists
 }
 
-fun removeElement(key: String, database: String = DATABASE) {
+fun removeElement(key: String, database: String = DATABASE): Boolean {
     val file = File(getPathName(database))
     val lines = file.readLines()
     val text = (lines.filter {it.split(' ')[0] != key}).joinToString("\n")
     file.writeText(text)
+    return lines.any { it.split(' ')[0] == key }
 }
 
-fun addElement(key: String, value: String, database: String = DATABASE) {
+fun addElement(key: String, value: String, database: String = DATABASE): Boolean {
     if (findValue(key, database) != null) {
-        return
+        return false
     }
     val line = "$key $value"
     val writer = FileOutputStream(getPathName(database), true).bufferedWriter()
     writer.write(line)
     writer.newLine()
     writer.close()
+    return true
 }
 
 fun clearDatabase(database: String = DATABASE) {

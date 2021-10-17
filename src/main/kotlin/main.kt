@@ -79,10 +79,13 @@ fun printWrong() {
 fun main(args: Array<String>) {
     val input = parseInput(args)
     when (input[0]) {
-        Commands.Add.name -> addElement(input[1], input[2])
-        Commands.Remove.name -> removeElement(input[1])
-        Commands.Modify.name -> modifyElement(input[1], input[2])
-        Commands.Clear.name -> clearDatabase()
+        Commands.Add.name -> if (!addElement(input[1], input[2])) println("Key already exists")else println("OK")
+        Commands.Remove.name -> if (!removeElement(input[1])) println("Key doesn't exists") else println("OK")
+        Commands.Modify.name -> if (!modifyElement(input[1], input[2])) println("New pair was created") else println("OK")
+        Commands.Clear.name -> {
+            clearDatabase()
+            println("OK")
+        }
         Commands.Help.name -> printHelp()
         else -> printWrong()
     }
