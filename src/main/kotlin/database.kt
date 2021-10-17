@@ -4,7 +4,7 @@ import java.io.FileOutputStream
 const val DATABASE: String = "database"
 
 fun getPathName(database: String = DATABASE): String {
-    return "src/database/$database.txt"
+    return "database/$database.txt"
 }
 
 fun findValue(key: String, database: String = DATABASE): String? {
